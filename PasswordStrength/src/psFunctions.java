@@ -298,7 +298,7 @@ public class psFunctions {
 			    consUpper(pass, ConsecutiveUpperScore, ConsecutiveUpperCount);
 			    consLower(pass, ConsecutiveLowerCount, ConsecutiveLowerScore);
 			    consNumber(pass, ConsecutiveNumCount, ConsecutiveNumScore);
-			    seqLetters(pass, SequentialLettersCount, SequentialLettersScore);
+//			    seqLetters(pass, SequentialLettersCount, SequentialLettersScore);
 //			    seqNumbers(pass, SecuentialNumCount, SequentialNumScore);
 //			    seqSymbols(pass, SequentialSymCount, SequentialSymScore);
 			    
@@ -603,35 +603,23 @@ public class psFunctions {
 	}
 	
 	public void repeatChars(String pass, Label ScoreLabel, Label CountLabel){
+		int repCount =0;
+		int[] coconut = new int[256];
 		
+		for(int i=0;i<pass.length();i++){
+			coconut[pass.charAt(i)]++;
+		}
 		
-//		int repCount = 0;
-//		int index = 0;
-//		Vector<Integer> symCount= new Vector<Integer>(256);
-//		
-//		for(int i=0;i<256;i++){
-//			symCount.insertElementAt(0, i);
-//		}
-//		
-//		System.out.print(symCount);
-//	
-//		for(int i =0; i < pass.length();i++){
-//			index = symCount.indexOf((int)pass.charAt(i));
-//			System.out.println(index);
-//		    System.out.println(String.valueOf(index));
-//			//System.out.println(Integer.valueOf(index));
-//			//symCount.set(index, symCount.get(index)+1);
-//		}
-//		
-//		for(int l = 0;l<symCount.size();l++){
-//			if(symCount.elementAt(l) >= 2){
-//				repCount = repCount + symCount.elementAt(l);
-//			}
-//		}
-//		CountLabel.setText(String.valueOf(repCount));
-//		int score = repCount * 2;
-//		ScoreLabel.setText(String.valueOf(score));
-//		bools.negScore = bools.negScore + score;
+		for(int i=0;i<coconut.length;i++){
+			if(coconut[i] >= 2){
+				repCount = repCount + coconut[i];
+			}
+		}
+		CountLabel.setText(String.valueOf(repCount));
+		int score = repCount * 2;
+		ScoreLabel.setText(String.valueOf(score));
+		bools.negScore = bools.negScore + score;
+
 	}
 	
 	int countRepeated(String pass){
@@ -727,65 +715,62 @@ public class psFunctions {
 	
 	
 	void seqLetters(String pass, Label CountLabel, Label ScoreLabel){
-		int seqCounter =0;
-		int counter =1 ;
-		int pos = 0; 
-		boolean yes = true;
-		boolean izqCheck = true;
 		
-		//seqcounter = countSequential(toUpperString(pass)), isuppper);
-		
-		for(int i=0; i < pass.length();i++){
-			if(Character.isLetter(pass.charAt(i))){
-				pos = i+1;
-				yes = true;
-				while(yes && counter < 3){
-					if(Character.toLowerCase(pass.charAt(pos)) == Character.toLowerCase(pass.charAt(pos-1)+1)){
-						counter++;
-						pos++;
-					}else{
-						yes=false;
-					}
-				}
-				
-				if(!yes){
-					izqCheck = true;
-					counter = 1;
-					pos = i+1;
-					while(izqCheck && counter < 3){
-						if(Character.toLowerCase(pass.charAt(pos))==Character.toLowerCase(pass.charAt(pos-1)-1)){
-							counter++;
-							pos++;
-						}else{
-							izqCheck=false;
-						}
-					}
-				}
-				if(counter == 3){
-					seqCounter++;
-				}
-				counter = 1;
-			}
-		}
-		
-		CountLabel.setText(String.valueOf(seqCounter));
-		int score = seqCounter * 3;
-		ScoreLabel.setText(String.valueOf(score));
-		bools.negScore = bools.negScore + score;
-		
-		if(seqCounter == 0){
-			CountLabel.setText(String.valueOf(seqCounter));
-			score = seqCounter * 3;
-			ScoreLabel.setText(String.valueOf(score));
-		}else{
-			CountLabel.setText(String.valueOf(seqCounter));
-			score = seqCounter * 3;
-			ScoreLabel.setText(String.valueOf(score));
-		}
-		
-		
-		
-		
+//		int seqCounter =0;
+//		int counter =1 ;
+//		int pos = 0; 
+//		boolean yes = true;
+//		boolean izqCheck = true;
+//		
+//		//seqcounter = countSequential(toUpperString(pass)), isuppper);
+//		
+//		for(int i=0; i < pass.length();i++){
+//			if(Character.isLetter(pass.charAt(i))){
+//				pos = i+1;
+//				yes = true;
+//				while(yes && counter < 3){
+//					if(Character.toLowerCase(pass.charAt(pos)) == Character.toLowerCase(pass.charAt(pos-1)+1)){
+//						counter++;
+//						pos++;
+//					}else{
+//						yes=false;
+//					}
+//				}
+//				
+//				if(!yes){
+//					izqCheck = true;
+//					counter = 1;
+//					pos = i+1;
+//					while(izqCheck && counter < 3){
+//						if(Character.toLowerCase(pass.charAt(pos))==Character.toLowerCase(pass.charAt(pos-1)-1)){
+//							counter++;
+//							pos++;
+//						}else{
+//							izqCheck=false;
+//						}
+//					}
+//				}
+//				if(counter == 3){
+//					seqCounter++;
+//				}
+//				counter = 1;
+//			}
+//		}
+//		
+//		CountLabel.setText(String.valueOf(seqCounter));
+//		int score = seqCounter * 3;
+//		ScoreLabel.setText(String.valueOf(score));
+//		bools.negScore = bools.negScore + score;
+//		
+//		if(seqCounter == 0){
+//			CountLabel.setText(String.valueOf(seqCounter));
+//			score = seqCounter * 3;
+//			ScoreLabel.setText(String.valueOf(score));
+//		}else{
+//			CountLabel.setText(String.valueOf(seqCounter));
+//			score = seqCounter * 3;
+//			ScoreLabel.setText(String.valueOf(score));
+//		}
 	}
 	
 	void seqNum(String pass, Label CountLabel, Label ScoreLabel){
