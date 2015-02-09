@@ -298,11 +298,11 @@ public class psFunctions {
 			    consUpper(pass, ConsecutiveUpperScore, ConsecutiveUpperCount);
 			    consLower(pass, ConsecutiveLowerCount, ConsecutiveLowerScore);
 			    consNumber(pass, ConsecutiveNumCount, ConsecutiveNumScore);
-//			    seqLetters(pass, SequentialLettersCount, SequentialLettersScore);
+			    seqLetters(pass, SequentialLettersCount, SequentialLettersScore);
 //			    seqNumbers(pass, SecuentialNumCount, SequentialNumScore);
 //			    seqSymbols(pass, SequentialSymCount, SequentialSymScore);
 			    
-			    System.out.println(pass);
+			    //System.out.println(pass);
 			
 			}
 		});
@@ -715,6 +715,83 @@ public class psFunctions {
 	
 	
 	void seqLetters(String pass, Label CountLabel, Label ScoreLabel){
+		int seqCounter =0;
+		int counter =1;
+		int pos=0;
+		char in ='a';
+		char out = 'A';
+		char test2='z';
+		
+		char test=' ';
+		char letter = ' ';
+		int j = 0;
+		int count = 0;
+		int score = 0;
+		int totalCount=0;
+		int x=0;
+		
+		for(int i=0;i<pass.length();i++){
+			if(Character.isLetter(pass.charAt(i))){
+				//System.out.print("i: " + i + "! ");
+				//j=i;
+				x=i;
+				//System.out.print("j: " + j + "! ");
+				letter = pass.charAt(i);
+				if(letter == 'z' || letter == 'Z'){
+//					while((char)((letter+j)%26) == pass.charAt(j)){
+//						count++;
+//						j++;
+//						if(count >= 2) score++;
+//					}
+				}else{
+					//System.out.print("letter: " + letter + " ");
+					//System.out.print("letter+J:" + (char)(letter+j) + " pass[j]:" + pass.charAt(j) + " ");
+					//System.out.print("j: " + j + " ");
+					while((char)(letter+j) == pass.charAt(x)){
+						j++;
+						x++;
+						count++;
+						//System.out.print("(count:" + count + ")");
+						if(count>=3){
+							totalCount++;
+							score= score - 3;
+							System.out.print("score: " + score + "!");
+							System.out.print("TotalCount: " + totalCount + "!");
+							i=count+i;
+							//System.out.print("(i inside if: " + i +") ");
+						}
+						if(j>=pass.length()){
+							j=0;
+							break;
+						}
+					}
+					j=0;
+					//System.out.print("count after while: " + count);
+					count=0;
+				}
+			}
+		}
+		
+//		//System.out.print(test2);
+//		test2 = (char)((test2+1)%26);
+//		System.out.print(test2);
+		
+		char[] abc = new char[52];
+		
+		for(int i=0;i<abc.length-26;i++){
+			abc[i] = in;
+			in = (char) (in + 1);
+		}
+		
+		for(int i=26;i<abc.length;i++){
+			abc[i] = out;
+			out = (char)(out + 1);
+		}
+		
+		
+		
+		//System.out.print(Arrays.toString(abc));
+		
 		
 //		int seqCounter =0;
 //		int counter =1 ;
