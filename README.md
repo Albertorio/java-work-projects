@@ -3,7 +3,8 @@
 To run:
   - Open eclipse
   - Go to help and click on install new software
-  - Chose one of the default sites 
+  - Choose all available sites 
   - Look for SWT Designer
-  - Download all files with name SWT
+  - Download all SWT Files
   - Restart eclipse
+  - Make a new project and select WindowBuilder/SWT Designer/SWT/JFaceProject
