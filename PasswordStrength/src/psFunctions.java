@@ -733,7 +733,7 @@ public class psFunctions {
 		for(int i=0;i<pass.length();i++){
 			if(Character.isLetter(pass.charAt(i))){
 				//System.out.print("i: " + i + "! ");
-				//j=i;
+				j=i;
 				x=i;
 				//System.out.print("j: " + j + "! ");
 				letter = pass.charAt(i);
