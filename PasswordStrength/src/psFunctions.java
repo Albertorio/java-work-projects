@@ -193,7 +193,7 @@ public class psFunctions {
 		NumbersOnlyScore.setText("0");
 		
 		Label lblCharacterscaseInsensitive = new Label(shell, SWT.NONE);
-		lblCharacterscaseInsensitive.setBounds(99, 294, 210, 19);
+		lblCharacterscaseInsensitive.setBounds(87, 294, 210, 19);
 		lblCharacterscaseInsensitive.setText("Repeat Characters (Case Insensitive):");
 		
 		final Label CharactersCount = new Label(shell, SWT.NONE);
@@ -299,8 +299,8 @@ public class psFunctions {
 			    consLower(pass, ConsecutiveLowerCount, ConsecutiveLowerScore);
 			    consNumber(pass, ConsecutiveNumCount, ConsecutiveNumScore);
 			    seqLetters(pass, SequentialLettersCount, SequentialLettersScore);
-//			    seqNumbers(pass, SecuentialNumCount, SequentialNumScore);
-//			    seqSymbols(pass, SequentialSymCount, SequentialSymScore);
+			    seqNum(pass, SecuentialNumCount, SequentialNumScore);
+			    seqSym(pass, SequentialSymCount, SequentialSymScore);
 			    
 			    //System.out.println(pass);
 			
@@ -321,7 +321,7 @@ public class psFunctions {
 				bools.totalScore = 100;
 				percent.setText(String.valueOf(bools.totalScore));
 			}else
-				if(bools.totalScore == 0){
+				if(bools.totalScore <= 0){
 					bools.totalScore = 0;
 					percent.setText(String.valueOf(bools.totalScore));
 				}
@@ -542,7 +542,7 @@ public class psFunctions {
 			bools.negScore = bools.negScore + lettersCounter;
 		}else{
 			lettersCounter = 0;
-			ScoreLabel.setText("-" + String.valueOf(lettersCounter));
+			ScoreLabel.setText(String.valueOf(lettersCounter));
 			CountLabel.setText(String.valueOf(lettersCounter));
 			bools.negScore = bools.negScore + lettersCounter;
 		}
@@ -596,7 +596,7 @@ public class psFunctions {
 			bools.negScore = bools.negScore + numCounter;
 		}else{
 			numCounter = 0;
-			ScoreLabel.setText("-" + String.valueOf(numCounter));
+			ScoreLabel.setText(String.valueOf(numCounter));
 			CountLabel.setText(String.valueOf(numCounter));
 			bools.negScore = bools.negScore + numCounter;
 		}
@@ -615,11 +615,18 @@ public class psFunctions {
 				repCount = repCount + coconut[i];
 			}
 		}
-		CountLabel.setText(String.valueOf(repCount));
-		int score = repCount * 2;
-		ScoreLabel.setText(String.valueOf(score));
-		bools.negScore = bools.negScore + score;
-
+		if(repCount > 0){
+			CountLabel.setText(String.valueOf(repCount));
+			int score = repCount * 2;
+			ScoreLabel.setText("-" + String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}else{
+			repCount = 0;
+			CountLabel.setText(String.valueOf(repCount));
+			int score = repCount * 2;
+			ScoreLabel.setText(String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}
 	}
 	
 	int countRepeated(String pass){
@@ -658,15 +665,24 @@ public class psFunctions {
 				tc++;
 				if(tc>=2){
 					c++;
-					CountLabel.setText(String.valueOf(c));
-					score = c * 2;
-					ScoreLabel.setText(String.valueOf(score));
 				}
 			}else{
 				tc = 0;
 			}
 		}
-		bools.negScore = bools.negScore + score;
+		if(c==0){
+			c=0;
+			CountLabel.setText(String.valueOf(c));
+			score = c * 2;
+			ScoreLabel.setText(String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}else{
+			CountLabel.setText(String.valueOf(c));
+			score = c * 2;
+			ScoreLabel.setText("-" + String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}
+		
 	}
 	
 	
@@ -681,15 +697,24 @@ public class psFunctions {
 				tc++;
 				if(tc>=2){
 					c++;
-					CountLabel.setText(String.valueOf(c));
-					score = c * 2;
-					ScoreLabel.setText(String.valueOf(score));
 				}
 			}else{
-				tc = 0;
+				tc = 0;			
 			}
 		}
-		bools.negScore = bools.negScore + score;
+		if(c==0){
+			c=0;
+			CountLabel.setText(String.valueOf(c));
+			score = c * 2;
+			ScoreLabel.setText(String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}else{
+			CountLabel.setText(String.valueOf(c));
+			score = c * 2;
+			ScoreLabel.setText("-" + String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}
+		
 	}
 	
 	void consNumber(String pass, Label CountLabel, Label ScoreLabel){
@@ -702,159 +727,141 @@ public class psFunctions {
 				tc++;
 				if(tc>=2){
 					c++;
-					CountLabel.setText(String.valueOf(c));
-					score = c * 2;
-					ScoreLabel.setText(String.valueOf(score));
 				}
 			}else{
 				tc = 0;
 			}
 		}
-		bools.negScore = bools.negScore + score;		
+		if(c==0){
+			c=0;
+			CountLabel.setText(String.valueOf(c));
+			score = c * 2;
+			ScoreLabel.setText(String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}else{
+			CountLabel.setText(String.valueOf(c));
+			score = c * 2;
+			ScoreLabel.setText("-" + String.valueOf(score));
+			bools.negScore = bools.negScore + score;
+		}
 	}
 	
 	
 	void seqLetters(String pass, Label CountLabel, Label ScoreLabel){
-		int seqCounter =0;
-		int counter =1;
-		int pos=0;
-		char in ='a';
-		char out = 'A';
-		char test2='z';
+	int seqCounter =0;
 		
-		char test=' ';
-		char letter = ' ';
-		int j = 0;
-		int count = 0;
-		int score = 0;
-		int totalCount=0;
-		int x=0;
+		int ctr = 0;
+		char prevChar_1 = 0, prevChar_2=0;
 		
 		for(int i=0;i<pass.length();i++){
+			char c= pass.charAt(i);
 			if(Character.isLetter(pass.charAt(i))){
-				//System.out.print("i: " + i + "! ");
-				j=i;
-				x=i;
-				//System.out.print("j: " + j + "! ");
-				letter = pass.charAt(i);
-				if(letter == 'z' || letter == 'Z'){
-//					while((char)((letter+j)%26) == pass.charAt(j)){
-//						count++;
-//						j++;
-//						if(count >= 2) score++;
-//					}
-				}else{
-					//System.out.print("letter: " + letter + " ");
-					//System.out.print("letter+J:" + (char)(letter+j) + " pass[j]:" + pass.charAt(j) + " ");
-					//System.out.print("j: " + j + " ");
-					while((char)(letter+j) == pass.charAt(x)){
-						j++;
-						x++;
-						count++;
-						//System.out.print("(count:" + count + ")");
-						if(count>=3){
-							totalCount++;
-							score= score - 3;
-							System.out.print("score: " + score + "!");
-							System.out.print("TotalCount: " + totalCount + "!");
-							i=count+i;
-							//System.out.print("(i inside if: " + i +") ");
-						}
-						if(j>=pass.length()){
-							j=0;
-							break;
-						}
-					}
-					j=0;
-					//System.out.print("count after while: " + count);
-					count=0;
+				if((c == (prevChar_1 - 1) && (prevChar_1 == prevChar_2 - 1)) || 
+					(c == (prevChar_1 + 1) && (prevChar_1 == prevChar_2 + 1))){
+					ctr++;
 				}
+				prevChar_2 = prevChar_1;
+				prevChar_1 = pass.charAt(i);
+			}else{
+				prevChar_2 = prevChar_1 = 0;
 			}
 		}
 		
-//		//System.out.print(test2);
-//		test2 = (char)((test2+1)%26);
-//		System.out.print(test2);
+		seqCounter = ctr;
 		
-		char[] abc = new char[52];
+		CountLabel.setText(String.valueOf(seqCounter));
+		int score = seqCounter * 3;
+		ScoreLabel.setText(String.valueOf(score));
+		bools.negScore = bools.negScore + score;
 		
-		for(int i=0;i<abc.length-26;i++){
-			abc[i] = in;
-			in = (char) (in + 1);
+		if(seqCounter == 0){
+			CountLabel.setText(String.valueOf(seqCounter));
+			score = seqCounter * 3;
+			ScoreLabel.setText(String.valueOf(score));
+		}else{
+			CountLabel.setText(String.valueOf(seqCounter));
+			score = seqCounter * 3;
+			ScoreLabel.setText("-" + String.valueOf(score));
 		}
 		
-		for(int i=26;i<abc.length;i++){
-			abc[i] = out;
-			out = (char)(out + 1);
-		}
-		
-		
-		
-		//System.out.print(Arrays.toString(abc));
-		
-		
-//		int seqCounter =0;
-//		int counter =1 ;
-//		int pos = 0; 
-//		boolean yes = true;
-//		boolean izqCheck = true;
-//		
-//		//seqcounter = countSequential(toUpperString(pass)), isuppper);
-//		
-//		for(int i=0; i < pass.length();i++){
-//			if(Character.isLetter(pass.charAt(i))){
-//				pos = i+1;
-//				yes = true;
-//				while(yes && counter < 3){
-//					if(Character.toLowerCase(pass.charAt(pos)) == Character.toLowerCase(pass.charAt(pos-1)+1)){
-//						counter++;
-//						pos++;
-//					}else{
-//						yes=false;
-//					}
-//				}
-//				
-//				if(!yes){
-//					izqCheck = true;
-//					counter = 1;
-//					pos = i+1;
-//					while(izqCheck && counter < 3){
-//						if(Character.toLowerCase(pass.charAt(pos))==Character.toLowerCase(pass.charAt(pos-1)-1)){
-//							counter++;
-//							pos++;
-//						}else{
-//							izqCheck=false;
-//						}
-//					}
-//				}
-//				if(counter == 3){
-//					seqCounter++;
-//				}
-//				counter = 1;
-//			}
-//		}
-//		
-//		CountLabel.setText(String.valueOf(seqCounter));
-//		int score = seqCounter * 3;
-//		ScoreLabel.setText(String.valueOf(score));
-//		bools.negScore = bools.negScore + score;
-//		
-//		if(seqCounter == 0){
-//			CountLabel.setText(String.valueOf(seqCounter));
-//			score = seqCounter * 3;
-//			ScoreLabel.setText(String.valueOf(score));
-//		}else{
-//			CountLabel.setText(String.valueOf(seqCounter));
-//			score = seqCounter * 3;
-//			ScoreLabel.setText(String.valueOf(score));
-//		}
+
 	}
 	
 	void seqNum(String pass, Label CountLabel, Label ScoreLabel){
+		int seqCounter =0;
 		
+		int ctr = 0;
+		char prevChar_1 = 0, prevChar_2=0;
+		
+		for(int i=0;i<pass.length();i++){
+			char c= pass.charAt(i);
+			if(Character.isDigit(pass.charAt(i))){
+				if((c == (prevChar_1 - 1) && (prevChar_1 == prevChar_2 - 1)) || 
+					(c == (prevChar_1 + 1) && (prevChar_1 == prevChar_2 + 1))){
+					ctr++;
+				}
+				prevChar_2 = prevChar_1;
+				prevChar_1 = pass.charAt(i);
+			}else{
+				prevChar_2 = prevChar_1 = 0;
+			}
+		}
+		
+		seqCounter = ctr;
+		
+		CountLabel.setText(String.valueOf(seqCounter));
+		int score = seqCounter * 3;
+		ScoreLabel.setText(String.valueOf(score));
+		bools.negScore = bools.negScore + score;
+		
+		if(seqCounter == 0){
+			CountLabel.setText(String.valueOf(seqCounter));
+			score = seqCounter * 3;
+			ScoreLabel.setText(String.valueOf(score));
+		}else{
+			CountLabel.setText(String.valueOf(seqCounter));
+			score = seqCounter * 3;
+			ScoreLabel.setText("-" + String.valueOf(score));
+		}
 	}
 	
 	void seqSym(String pass, Label CountLabel, Label ScoreLabel){
+	int seqCounter =0;
+		
+		int ctr = 0;
+		char prevChar_1 = 0, prevChar_2=0;
+		
+		for(int i=0;i<pass.length();i++){
+			char c= pass.charAt(i);
+			if(!Character.isLetter(pass.charAt(i)) && !Character.isDigit(pass.charAt(i)) && !Character.isSpace(pass.charAt(i))){
+				if((c == (prevChar_1 - 1) && (prevChar_1 == prevChar_2 - 1)) || 
+					(c == (prevChar_1 + 1) && (prevChar_1 == prevChar_2 + 1))){
+					ctr++;
+				}
+				prevChar_2 = prevChar_1;
+				prevChar_1 = pass.charAt(i);
+			}else{
+				prevChar_2 = prevChar_1 = 0;
+			}
+		}
+		
+		seqCounter = ctr;
+		
+		CountLabel.setText(String.valueOf(seqCounter));
+		int score = seqCounter * 3;
+		ScoreLabel.setText(String.valueOf(score));
+		bools.negScore = bools.negScore + score;
+		
+		if(seqCounter == 0){
+			CountLabel.setText(String.valueOf(seqCounter));
+			score = seqCounter * 3;
+			ScoreLabel.setText(String.valueOf(score));
+		}else{
+			CountLabel.setText(String.valueOf(seqCounter));
+			score = seqCounter * 3;
+			ScoreLabel.setText("-" + String.valueOf(score));
+		}
+		
 		
 	}
 	
