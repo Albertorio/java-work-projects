@@ -826,44 +826,85 @@ public class psFunctions {
 	}
 	
 	void seqSym(String pass, Label CountLabel, Label ScoreLabel){
-	int seqCounter =0;
-		
-		int ctr = 0;
-		char prevChar_1 = 0, prevChar_2=0;
+		int seqcounter = 0;
+		int counter = 1;
+		boolean yes = true;
+		int pos =0;
+		int nextpos =0;
+		int posSym =0;
+		boolean izqCheck = true;
+		char symbols[] = {'`','~','!','@','#','$','%','^','&','*','(',')','-','+','=','_','[',']','{','}','|',';',':','"','<','>','?',
+                '/',',','.','\\','\'','1','2','3','4','5','6','7','8','9','0'};
 		
 		for(int i=0;i<pass.length();i++){
-			char c= pass.charAt(i);
-			if(!Character.isLetter(pass.charAt(i)) && !Character.isDigit(pass.charAt(i)) && !Character.isSpace(pass.charAt(i))){
-				if((c == (prevChar_1 - 1) && (prevChar_1 == prevChar_2 - 1)) || 
-					(c == (prevChar_1 + 1) && (prevChar_1 == prevChar_2 + 1))){
-					ctr++;
+			if(!Character.isDigit(pass.charAt(i)) && !Character.isLetter(pass.charAt(i)) && !Character.isSpace(pass.charAt(i)) ){
+				yes = true;
+				pos = i+1;
+				nextpos = 0;
+				posSym = findSymPos(pass.charAt(i));
+				System.out.println("posSym" + posSym);
+				while(yes && counter < 3){
+//					if(pass.charAt(pos) == symbols[posSym]){
+//						counter++;
+//						pos++;
+//						nextpos++;
+//					}else{
+//						yes = false;
+//					}
 				}
-				prevChar_2 = prevChar_1;
-				prevChar_1 = pass.charAt(i);
-			}else{
-				prevChar_2 = prevChar_1 = 0;
+				
+				if(!yes){
+					nextpos = 1;
+					izqCheck = true;
+					counter = 1;
+					pos = i+1;
+					while(izqCheck && counter < 3){
+						if(pass.charAt(pos) == symbols[posSym - nextpos]){
+							counter++;
+							pos++;
+							nextpos++;
+						}else{
+							izqCheck = false;
+						}
+					}
+				}
+				
+				if(counter == 3){
+					seqcounter++;
+				}
+				counter = 1;
 			}
 		}
 		
-		seqCounter = ctr;
-		
-		CountLabel.setText(String.valueOf(seqCounter));
-		int score = seqCounter * 3;
+		CountLabel.setText(String.valueOf(seqcounter));
+		int score = seqcounter * 3;
 		ScoreLabel.setText(String.valueOf(score));
 		bools.negScore = bools.negScore + score;
 		
-		if(seqCounter == 0){
-			CountLabel.setText(String.valueOf(seqCounter));
-			score = seqCounter * 3;
+		if(seqcounter == 0){
+			CountLabel.setText(String.valueOf(seqcounter));
+			score = seqcounter * 3;
 			ScoreLabel.setText(String.valueOf(score));
 		}else{
-			CountLabel.setText(String.valueOf(seqCounter));
-			score = seqCounter * 3;
+			CountLabel.setText(String.valueOf(seqcounter));
+			score = seqcounter * 3;
 			ScoreLabel.setText("-" + String.valueOf(score));
 		}
 		
 		
 	}
+	
+	int findSymPos(char sym){
+		char symbols[] = {'`','~','!','@','#','$','%','^','&','*','(',')','-','+','=','_','[',']','{','}','|',';',':','"','<','>','?',
+                '/',',','.','\\','\'','1','2','3','4','5','6','7','8','9','0'};
+		for(int i =0; i<42;i++){
+			if(sym == symbols[i]){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	
 	
 }
